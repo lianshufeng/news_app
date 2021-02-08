@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>热搜一个就够了 www.dzurl.top</title>
+    <link rel="stylesheet" href="./css/themes/default/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="./_assets/css/jqm-demos.css">
+    <script src="./js/jquery.js"></script>
+    <script src="./_assets/js/index.js"></script>
+    <script src="./js/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+<div data-role="page" class="jqm-demos">
+
+    <div data-role="header" class="jqm-header">
+        <h2><a href="./" title="jQuery Mobile Demos home"><img src="./_assets/img/jquery-logo.png" alt="jQuery Mobile"></a>
+        </h2>
+        <!--        <p><span class="jqm-version"></span> Demos</p>-->
+        <a href="#"
+           class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
+        <a href="#"
+           class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-location ui-nodisc-icon ui-alt-icon ui-btn-right">天气</a>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content jqm-content">
+
+        <ul data-role="listview" data-inset="true" data-divider-theme="a" id="newsMain">
+            <li data-role="list-divider">载入中</li>
+            <li><a href="#">暂无数据...</a></li>
+        </ul>
+
+
+    </div><!-- /content -->
+    <div data-role="panel" class="jqm-navmenu-panel" data-position="left" data-display="overlay" data-theme="a">
+        <ul class="jqm-list ui-alt-icon ui-nodisc-icon">
+            <li data-filtertext="demos homepage" data-icon="refresh"><a href="#" onclick="location.reload()">刷新</a></li>
+            <li data-filtertext="introduction overview getting started" data-icon="info"><a href="#" data-ajax="false">关于</a>
+            </li>
+
+        </ul>
+    </div>
+</div><!-- /panel -->
+
+
+</div><!-- /page -->
+
+</body>
+</html>
