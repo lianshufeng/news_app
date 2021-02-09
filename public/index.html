@@ -30,17 +30,17 @@
            class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Launch video player</a>
         <div id="popup_webpage" data-role="popup" data-overlay-theme="a" data-theme="a" data-tolerance="15,15"
              class="ui-content">
-            <iframe src="about:blank" seamless=""></iframe>
+            <!--            <iframe src="about:blank" seamless=""></iframe>-->
         </div>
     </div>
 
     <!--    列表窗口-->
     <div role="main" class="ui-content jqm-content">
-        <ul data-role="listview" data-inset="true" data-divider-theme="a" id="newsMain">
+        <ul data-role="listview" data-inset="true" data-divider-theme="b" id="newsMain">
             <div id="item_div">
                 <li id="item_parent" data-role="list-divider">载入中</li>
-                <li id="item_children">
-                    <a href="#">暂无数据...</a>
+                <li id="item_children" data-icon="false">
+                    <a href="#">暂无数据...<span class="ui-li-count">0</span></a>
             </div>
         </ul>
 

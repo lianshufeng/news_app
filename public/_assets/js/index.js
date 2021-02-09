@@ -132,14 +132,25 @@ $(document).on("pagecreate", function () {
 
                     //修改a的标题
                     let a = child.find('a');
-                    a.text(item.title);
                     a.data('url', item.url);
                     a.data('title', item.title);
+                    a.data('hot', item.hot);
                     a.data('type', type);
                     a.data('page', page);
 
-                    child.appendTo($("#newsMain"))
+                    //设置标题
+                    a.text(item.title);
 
+                    //增加热度
+                    if (item.hot) {
+                        let span = $(document.createElement('span'))
+                        span.attr('class', 'ui-li-count')
+                        span.text(item.hot)
+                        a.append(span)
+                    }
+
+                    //添加到项里
+                    child.appendTo($("#newsMain"))
                 }
                 //刷新，重新加载样式
                 $("#newsMain").listview("refresh");
@@ -152,9 +163,8 @@ $(document).on("pagecreate", function () {
     //当前设备是否手机
     let isMobile = navigator.userAgent.match(/mobile/i);
 
-
     //载入新闻
-    loadNews('微博', apiHost + '/news/weibo', 'https://s.weibo.com/weibo?Refer=new_time&q=')
+    loadNews('微博', apiHost + '/news/weibo', 'https://s.weibo.com/weibo?Refer=new_time&q=')//'https://s.weibo.com/weibo?Refer=new_time&q='
         .then(() => {
             return loadNews('百度', apiHost + '/news/baidu', isMobile ? 'https://wap.baidu.com/s?word=' : 'https://www.baidu.com/s?wd=');
         })
@@ -172,21 +182,35 @@ $(document).on("pagecreate", function () {
                 //取出标题并编码
                 let keyWord = encodeURI(me.data('title'));
                 let page = me.data('page');
-                let url = page + keyWord;
+                let url = page ? page + keyWord : me.data('url');
                 let type = me.data('type');
-
 
 
                 if (type == '知乎') {
                     window.open(url)
                 } else {
-                    //修改将要弹出的页面
-                    let iframe = $('#popup_webpage').find('iframe');
-                    iframe.attr('src', url);
-                    iframe.attr('height', $(window).height() * 0.8);
+
+                    //删除以前的
+                    $('#popup_webpage').find('iframe').remove();
+
+                    // iframe.src = "/";
+                    // iframe.referrerPolicy = "unsafe-url";
+                    let iframe = $(document.createElement("iframe"));
+                    $('#popup_webpage').append(iframe);
+                    iframe.attr('height', $(window).height() * 0.85);
                     iframe.attr('width', $(window).width() * 0.8);
-                    //触发弹出页面
+                    iframe.attr('referrerPolicy', 'no-referrer');
+
+                    iframe.attr('src', url);
                     $("#popup_btn").click()
+
+                    // //修改将要弹出的页面
+                    // let iframe = $('#popup_webpage').find('iframe');
+                    // iframe.attr('src', url);
+                    // iframe.attr('height', $(window).height() * 0.85);
+                    // iframe.attr('width', $(window).width() * 0.8);
+                    //触发弹出页面
+                    // $("#popup_btn").click()
                 }
             });
         })
