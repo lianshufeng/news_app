@@ -156,7 +156,7 @@ $(document).on("pagecreate", function () {
     //载入新闻
     loadNews('微博', apiHost + '/news/weibo', 'https://s.weibo.com/weibo?Refer=new_time&q=')
         .then(() => {
-            return loadNews('百度', apiHost + '/news/baidu', isMobile ? 'http://wap.baidu.com/s?word=' : 'https://www.baidu.com/s?wd=');
+            return loadNews('百度', apiHost + '/news/baidu', isMobile ? 'https://wap.baidu.com/s?word=' : 'https://www.baidu.com/s?wd=');
         })
         .then(() => {
             return loadNews('知乎', apiHost + '/news/zhihu', 'https://www.zhihu.com/search?type=content&q=');
