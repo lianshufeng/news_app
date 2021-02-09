@@ -175,6 +175,8 @@ $(document).on("pagecreate", function () {
                 let url = page + keyWord;
                 let type = me.data('type');
 
+
+
                 if (type == '知乎') {
                     window.open(url)
                 } else {
