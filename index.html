@@ -23,11 +23,24 @@
            class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-location ui-nodisc-icon ui-alt-icon ui-btn-right">天气</a>
     </div><!-- /header -->
 
-    <div role="main" class="ui-content jqm-content">
+    <!-- 弹窗 -->
+    <div>
+        <a id="popup_btn" style="display: none" href="#popup_webpage" data-rel="popup" data-position-to="window"
+           class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Launch video player</a>
+        <div id="popup_webpage" data-role="popup" data-overlay-theme="a" data-theme="a" data-tolerance="15,15"
+             class="ui-content">
+            <iframe src="about:blank" seamless=""></iframe>
+        </div>
+    </div>
 
+    <!--    列表窗口-->
+    <div role="main" class="ui-content jqm-content">
         <ul data-role="listview" data-inset="true" data-divider-theme="a" id="newsMain">
-            <li data-role="list-divider">载入中</li>
-            <li><a href="#">暂无数据...</a></li>
+            <div id="item_div">
+                <li id="item_parent" data-role="list-divider">载入中</li>
+                <li id="item_children">
+                    <a href="#">暂无数据...</a>
+            </div>
         </ul>
 
 

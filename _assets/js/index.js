@@ -104,7 +104,7 @@ $(document).on("pagecreate", function () {
     const apiHost = 'https://api.dzurl.top';
 
     //初始化
-    $("#newsMain").find('li').remove();
+    $("#newsMain").find('#item_div').hide();
 
 
     /**
@@ -113,21 +113,33 @@ $(document).on("pagecreate", function () {
      * @param url
      * @returns {Promise<unknown>}
      */
-    let loadNews = function (title, url) {
+    let loadNews = function (type, url, page) {
         return new Promise((resolve, reject) => {
-            console.log('加载 : ' + title);
-            $("#newsMain").append('<li data-role="list-divider">' + title + '</li>')
+            console.log('load -> ', type);
+            $('#item_parent').clone().removeAttr('id').text(type).appendTo($("#newsMain"))
 
             $.ajax({
                 url: url,
                 dataType: "json",
-                method: 'GET',
+                method: 'POST',
                 crossDomain: true,
             }).then(function (response) {
                 for (let i in response['ret']) {
                     let item = response['ret'][i];
-                    let html = '<li><a href="#">' + item.title + '</a></li>';
-                    $("#newsMain").append(html);
+
+                    //子项
+                    let child = $('#item_children').clone().removeAttr('id');
+
+                    //修改a的标题
+                    let a = child.find('a');
+                    a.text(item.title);
+                    a.data('url', item.url);
+                    a.data('title', item.title);
+                    a.data('type', type);
+                    a.data('page', page);
+
+                    child.appendTo($("#newsMain"))
+
                 }
                 //刷新，重新加载样式
                 $("#newsMain").listview("refresh");
@@ -137,16 +149,44 @@ $(document).on("pagecreate", function () {
     }
 
 
+    //当前设备是否手机
+    let isMobile = navigator.userAgent.match(/mobile/i);
+
+
     //载入新闻
-    loadNews('微博', apiHost + '/news/weibo')
+    loadNews('微博', apiHost + '/news/weibo', 'https://s.weibo.com/weibo?Refer=new_time&q=')
         .then(() => {
-            return loadNews('百度', apiHost + '/news/weibo')
+            return loadNews('百度', apiHost + '/news/baidu', isMobile ? 'http://wap.baidu.com/s?word=' : 'https://www.baidu.com/s?wd=');
         })
         .then(() => {
-            return loadNews('知乎', apiHost + '/news/zhihu')
+            return loadNews('知乎', apiHost + '/news/zhihu', 'https://www.zhihu.com/search?type=content&q=');
         })
         .then(() => {
-            return loadNews('搜狗', apiHost + '/news/sogou')
+            return loadNews('搜狗', apiHost + '/news/sogou', isMobile ? 'https://wap.sogou.com/web/searchList.jsp?keyword=' : 'https://www.sogou.com/web?query=');
+        })
+        .then(() => {
+            // 监视所有的按钮
+            $('#newsMain').find('a').click((event) => {
+                //取出当前的a
+                let me = $(event.currentTarget);
+                //取出标题并编码
+                let keyWord = encodeURI(me.data('title'));
+                let page = me.data('page');
+                let url = page + keyWord;
+                let type = me.data('type');
+
+                if (type == '知乎') {
+                    window.open(url)
+                } else {
+                    //修改将要弹出的页面
+                    let iframe = $('#popup_webpage').find('iframe');
+                    iframe.attr('src', url);
+                    iframe.attr('height', $(window).height() * 0.8);
+                    iframe.attr('width', $(window).width() * 0.8);
+                    //触发弹出页面
+                    $("#popup_btn").click()
+                }
+            });
         })
 
 
